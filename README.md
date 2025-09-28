@@ -105,8 +105,8 @@ cd Godszeal-Hub-Apk
 
 ## 🎮 Screenshots
 
-![APK Hub Homepage Preview](assets/screenshot1.png)
-![APK Details Modal](assets/screenshot2.png)
+![APK Hub Homepage Preview](https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal84.jpg)
+![APK Details Modal](https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal90.jpg)
 *(Add your own screenshots in the /assets/ directory.)*
 
 ---
