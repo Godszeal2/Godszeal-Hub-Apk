@@ -40,6 +40,12 @@ You can download APK files directly from the website:
 - **Credit Section**: Proper attribution for icons, resources, and inspiration.
 - **Live Demo & Download**: Direct links for users to try or download the APKs.
 - **Open Source**: Fork, star, and contribute!
+- **Direct Links to Forks & Stars**: Easily fork or star the project with a single click.
+- **Progressive Web App (PWA) Support**: Installable on Android for a native-like experience.
+- **Multi-language Support**: Switch between different languages (coming soon).
+- **APK Version History**: View and download previous versions of apps (coming soon).
+- **User Ratings & Reviews**: Users can rate and review apps (coming soon).
+- **Admin Panel (Planned)**: For managing submissions and moderating reviews.
 
 ---
 
@@ -60,7 +66,8 @@ You can download APK files directly from the website:
 
 ### 1. **Fork This Repo**
 
-Click the **Fork** button (top right) to add APK Hub to your own GitHub account.
+Click the **Fork** button (top right) or use this direct link:  
+[🍴 Fork this repository](https://github.com/Godszeal2/Godszeal-Hub-Apk/fork)
 
 ### 2. **Clone the Fork**
 
@@ -90,8 +97,8 @@ cd Godszeal-Hub-Apk
 
 ## ⭐ Get Started
 
-- **Star** this repo to support the project!
-- **Fork** and make it your own APK hub.
+- [⭐ Star this repo](https://github.com/Godszeal2/Godszeal-Hub-Apk/stargazers) to support the project!
+- [🍴 Fork this repo](https://github.com/Godszeal2/Godszeal-Hub-Apk/fork) and make it your own APK hub.
 - **Report Issues** or suggest features via the [Issues](https://github.com/Godszeal2/Godszeal-Hub-Apk/issues) tab.
 
 ---
@@ -119,7 +126,7 @@ cd Godszeal-Hub-Apk
 Want to improve APK Hub?  
 Pull requests are welcome! For major changes, open an issue first to discuss what you would like to change.
 
-- Fork the repo
+- Fork the repo ([Fork Link](https://github.com/Godszeal2/Godszeal-Hub-Apk/fork))
 - Create your feature branch: `git checkout -b feature/my-feature`
 - Commit your changes: `git commit -am 'Add amazing feature'`
 - Push to the branch: `git push origin feature/my-feature`
@@ -168,7 +175,9 @@ Visit the [Live Demo](https://godszeal2.github.io/Godszeal-Hub-Apk/)
 
 ---
 
-⭐ If you find this project helpful, please consider giving it a star!
+⭐ If you find this project helpful, please consider giving it a [star](https://github.com/Godszeal2/Godszeal-Hub-Apk/stargazers)!
+
+🍴 [Fork this project](https://github.com/Godszeal2/Godszeal-Hub-Apk/fork) to start your own APK hub!
 
 👤 Don’t forget to [follow the developer on GitHub](https://github.com/Godszeal2) for more awesome projects!
 
