@@ -1,0 +1,2699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APK Hub - Download Apps & Games</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #166534;
+            --accent: #059669;
+            --light: #f8fafc;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --card-bg: #ffffff;
+            --bg: #f1f5f9;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --transition: all 0.25s ease;
+            --radius: 12px;
+            --radius-sm: 8px;
+            --footer-height: 0;
+        }
+        .dark-mode {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --secondary: #22c55e;
+            --accent: #16a34a;
+            --light: #0f172a;
+            --dark: #020617;
+            --gray: #94a3b8;
+            --card-bg: #1e293b;
+            --bg: #0f172a;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--dark);
+            transition: var(--transition);
+            overflow-x: hidden;
+            line-height: 1.6;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        /* Header Styles */
+        header {
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        .logo-icon {
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .search-bar {
+            display: flex;
+            max-width: 650px;
+            width: 100%;
+            background: #f1f5f9;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--dark);
+            outline: none;
+            transition: var(--transition);
+        }
+        .search-bar button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            border-radius: 0 var(--radius) var(--radius) 0;
+        }
+        .search-bar button:hover {
+            background: var(--primary-dark);
+        }
+        .header-actions {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+        }
+        .theme-toggle {
+            width: 60px;
+            height: 30px;
+            background: #e2e8f0;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .theme-toggle::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            top: 3px;
+            left: 3px;
+            transition: var(--transition);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .dark-mode .theme-toggle {
+            background: #334155;
+        }
+        .dark-mode .theme-toggle::after {
+            left: 33px;
+        }
+        /* Main Content */
+        main {
+            padding: 2rem 0;
+        }
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-top: 1rem;
+        }
+        .section-title h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 50px;
+            background: rgba(37, 99, 235, 0.1);
+            transition: var(--transition);
+        }
+        .view-all:hover {
+            background: rgba(37, 99, 235, 0.15);
+            transform: translateX(3px);
+        }
+        /* Featured Carousel */
+        .featured-section {
+            margin-bottom: 2rem;
+        }
+        .featured-carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+        .carousel-inner {
+            display: flex;
+            transition: var(--transition);
+            padding: 15px 0;
+        }
+        .carousel-item {
+            min-width: 100%;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+        .featured-card {
+            background: linear-gradient(135deg, var(--card-bg), #f8fafc);
+            border-radius: var(--radius);
+            overflow: hidden;
+            height: 300px;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+            color: var(--dark);
+        }
+        .dark-mode .featured-card {
+            background: linear-gradient(135deg, var(--card-bg), #1e293b);
+        }
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+            z-index: 1;
+        }
+        .featured-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .featured-card-content {
+            position: relative;
+            z-index: 2;
+            padding: 1.5rem;
+            width: 100%;
+        }
+        .featured-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        .featured-card .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 0.5rem 0;
+            font-weight: 600;
+        }
+        .carousel-controls {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 10;
+        }
+        .carousel-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-50%) scale(1.1);
+        }
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.2rem 0 1.8rem;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        .category {
+            background: var(--card-bg);
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-sm);
+            padding: 0.8rem 1.2rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 120px;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .category:hover, .category.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        /* Apps Grid */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .app-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border: 1px solid #e2e8f0;
+        }
+        .app-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+        .app-icon {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8fafc;
+            position: relative;
+            overflow: hidden;
+        }
+        .app-icon img {
+            max-width: 100%;
+            max-height: 130px;
+            object-fit: contain;
+            transition: var(--transition);
+        }
+        .app-card:hover .app-icon img {
+            transform: scale(1.05);
+        }
+        .app-info {
+            padding: 1.2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .app-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: var(--dark);
+        }
+        .developer {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #f59e0b;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        /* Search Results Section */
+        .search-results-section {
+            display: none;
+            margin-top: 2rem;
+        }
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .search-stats {
+            background: var(--card-bg);
+            padding: 10px 15px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            color: var(--primary);
+            box-shadow: var(--shadow-sm);
+        }
+        /* Carousels for related apps */
+        .related-apps {
+            margin-top: 1.5rem;
+        }
+        .carousel-container {
+            position: relative;
+            margin-top: 1.2rem;
+        }
+        .carousel-container h3 {
+            margin-bottom: 0.8rem;
+            font-size: 1.5rem;
+        }
+        .related-carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 1.2rem;
+            padding: 10px 0;
+            scroll-behavior: smooth;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .related-carousel::-webkit-scrollbar {
+            display: none;
+        }
+        .related-item {
+            min-width: 180px;
+            flex: 0 0 180px;
+        }
+        /* Loading States */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 3rem 0;
+            grid-column: 1 / -1;
+        }
+        .loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(37, 99, 235, 0.1);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Form Loading State */
+        .form-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            display: none;
+        }
+        .form-loading.active {
+            display: flex;
+        }
+        .form-loading .loader {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(37, 99, 235, 0.1);
+            border-top: 3px solid var(--primary);
+        }
+        /* Modals */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+        }
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--gray);
+            z-index: 10;
+            transition: var(--transition);
+        }
+        .close-modal:hover {
+            color: var(--primary);
+            transform: rotate(90deg);
+        }
+        .app-details {
+            padding: 2rem;
+        }
+        .app-header {
+            display: flex;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        .app-header img {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: var(--shadow-sm);
+        }
+        .app-header-info h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        .app-header-info .developer {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .app-header-info .developer i {
+            color: var(--primary);
+        }
+        .app-header-info .rating {
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .btn {
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            border: none;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        .download-modal-content {
+            padding: 2rem;
+        }
+        .download-instructions {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .download-instructions h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+        }
+        .follow-channel {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+        }
+        .follow-channel:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+        }
+        .countdown {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 99;
+            border-top: 1px solid #e2e8f0;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 6px 0;
+            color: var(--gray);
+            transition: var(--transition);
+            width: 20%;
+            cursor: pointer;
+        }
+        .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+        .nav-item span {
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+        /* Footer - Now App Style */
+        .app-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--card-bg);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+            z-index: 99;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            padding: 0;
+            border-top: 1px solid #e2e8f0;
+        }
+        .app-footer.active {
+            transform: translateY(0);
+        }
+        .footer-header {
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .footer-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .close-footer {
+            background: #e2e8f0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .close-footer:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .footer-content {
+            padding: 1.5rem 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .footer-section {
+            margin-bottom: 1.5rem;
+        }
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .footer-section h3 i {
+            font-size: 1.1rem;
+        }
+        .footer-links a {
+            display: block;
+            margin-bottom: 0.7rem;
+            color: var(--gray);
+            text-decoration: none;
+            transition: var(--transition);
+            padding: 8px 0;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--primary);
+            text-decoration: none;
+            background: rgba(37, 99, 235, 0.05);
+            padding-left: 10px;
+        }
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #f1f5f9;
+            color: var(--dark);
+            transition: var(--transition);
+        }
+        .dark-mode .social-links a {
+            background: #334155;
+        }
+        .social-links a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-3px);
+        }
+        .newsletter {
+            margin: 1.5rem 0;
+        }
+        .newsletter h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 8px;
+        }
+        .newsletter-form input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-sm);
+            outline: none;
+        }
+        .newsletter-form button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .newsletter-form button:hover {
+            background: var(--primary-dark);
+        }
+        .footer-bottom {
+            text-align: center;
+            padding: 1rem;
+            border-top: 1px solid #e2e8f0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        .footer-bottom a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+        /* Request App Section */
+        .request-app {
+            margin-top: 1.5rem;
+        }
+        .request-app h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .request-app-form {
+            display: grid;
+            gap: 12px;
+        }
+        .request-app-form input,
+        .request-app-form textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-sm);
+            outline: none;
+        }
+        .request-app-form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .request-app-form button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+        .request-app-form button:hover {
+            background: var(--primary-dark);
+        }
+        /* Legal Content */
+        .legal-content {
+            margin-top: 1.5rem;
+        }
+        .legal-content h4 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        .legal-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-md);
+            z-index: 2000;
+            opacity: 0;
+            transform: translateX(100px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .toast.success {
+            background: var(--accent);
+        }
+        .toast.error {
+            background: #ef4444;
+        }
+        /* Notification Modal */
+        .notification-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .notification-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            padding: 2rem;
+        }
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .notification-header h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        .notification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .notification-item {
+            padding: 15px;
+            border-radius: var(--radius-sm);
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+        }
+        .notification-item:hover {
+            background: #f1f5f9;
+            transform: translateX(5px);
+        }
+        .notification-item h4 {
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+        .notification-item p {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        .notification-item .time {
+            font-size: 0.8rem;
+            color: var(--gray);
+            display: block;
+        }
+        /* Content Modal */
+        .content-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .content-modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 700px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+        }
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .content-header h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        .content-body {
+            line-height: 1.7;
+        }
+        .content-body h4 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 0.8rem;
+            color: var(--primary);
+        }
+        .content-body p {
+            margin-bottom: 1.2rem;
+        }
+        .content-body ul {
+            margin-left: 20px;
+            margin-bottom: 1.2rem;
+        }
+        .content-body li {
+            margin-bottom: 8px;
+        }
+        /* Form Modal */
+        .form-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .form-modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 600px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+        }
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .form-header h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+        .form-body {
+            display: grid;
+            gap: 15px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .form-group label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: var(--radius-sm);
+            outline: none;
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .form-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        /* Success Modal */
+        .success-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .success-modal-content {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            text-align: center;
+        }
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #d1fae5;
+            color: #059669;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+        .success-title {
+            font-size: 2rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        .success-message {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: var(--gray);
+        }
+        .success-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            width: 100%;
+        }
+        .success-button:hover {
+            background: var(--primary-dark);
+        }
+        /* Partners Section */
+        .partners {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .partner-logo {
+            background: #f1f5f9;
+            border-radius: var(--radius-sm);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        .partner-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-sm);
+        }
+        .partner-logo img {
+            max-height: 40px;
+            max-width: 120px;
+            object-fit: contain;
+        }
+        /* Community Section */
+        .community {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .community-item {
+            background: #f1f5f9;
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .community-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-5px);
+        }
+        .community-item i {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        .community-item:hover i {
+            color: white;
+        }
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+        @media (max-width: 992px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1.2rem;
+            }
+            .search-bar {
+                max-width: 100%;
+            }
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .bottom-nav {
+                display: flex;
+            }
+            .featured-card {
+                height: 250px;
+            }
+            .featured-card-content {
+                padding: 1.2rem;
+            }
+            .featured-card h3 {
+                font-size: 1.5rem;
+            }
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            .featured-card {
+                height: 220px;
+            }
+            .featured-card h3 {
+                font-size: 1.3rem;
+            }
+            .featured-card-content {
+                padding: 1rem;
+            }
+            .app-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .app-header-info {
+                text-align: center;
+            }
+            .app-header-info .rating {
+                justify-content: center;
+            }
+            .app-footer {
+                padding: 0;
+            }
+            .footer-content {
+                padding: 1.5rem 1.5rem;
+            }
+            .footer-header {
+                padding: 1rem 1.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.8rem;
+            }
+            .search-bar input {
+                padding: 10px 12px;
+            }
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            .featured-card {
+                height: 200px;
+            }
+            .featured-card h3 {
+                font-size: 1.1rem;
+            }
+            .featured-card-content {
+                padding: 0.8rem;
+            }
+            .app-header img {
+                width: 100px;
+                height: 100px;
+            }
+            .app-header-info h2 {
+                font-size: 1.6rem;
+            }
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            .download-instructions h3 {
+                font-size: 1.6rem;
+            }
+            .countdown {
+                font-size: 2rem;
+            }
+            .categories {
+                gap: 0.8rem;
+            }
+            .category {
+                padding: 0.7rem 1rem;
+                min-width: 100px;
+            }
+            .app-footer .footer-content {
+                padding: 1rem;
+            }
+            .footer-header {
+                padding: 0.8rem 1rem;
+            }
+            .footer-section h3 {
+                font-size: 1.2rem;
+            }
+        }
+        @media (max-width: 375px) {
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            .featured-card {
+                height: 180px;
+            }
+            .featured-card h3 {
+                font-size: 1rem;
+            }
+            .section-title h2 {
+                font-size: 1.3rem;
+            }
+            .app-header-info h2 {
+                font-size: 1.4rem;
+            }
+            .action-buttons {
+                gap: 0.6rem;
+            }
+            .btn {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            .category {
+                min-width: 90px;
+                padding: 0.6rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-download"></i>
+                </div>
+                <span>APK Hub</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for apps and games...">
+                <button type="button" id="searchBtn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="header-actions">
+                <div class="theme-toggle" id="themeToggle"></div>
+                <i class="fas fa-bell" id="notificationBtn" style="color: var(--primary); font-size: 1.2rem; cursor: pointer;"></i>
+                <i class="fas fa-compass" id="footerToggleBtn" style="color: var(--primary); font-size: 1.2rem; cursor: pointer;"></i>
+            </div>
+        </div>
+    </header>
+    <main class="container" id="home">
+        <div class="featured-section">
+            <div class="section-title">
+                <h2>Featured Apps</h2>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="featured-carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item">
+                        <div class="featured-card">
+                            <img class="featured-card-img" src="https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal71.jpeg" alt="Featured App 1">
+                            <div class="featured-card-content">
+                                <h3>WhatsApp Messenger</h3>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.7</span>
+                                </div>
+                                <p>Send messages and make calls worldwide</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="featured-card">
+                            <img class="featured-card-img" src="https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal97.jpeg" alt="Featured App 2">
+                            <div class="featured-card-content">
+                                <h3>Instagram</h3>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.5</span>
+                                </div>
+                                <p>Share your moments with the world</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="featured-card">
+                            <img class="featured-card-img" src="https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal70.jpeg" alt="Featured App 3">
+                            <div class="featured-card-content">
+                                <h3>Spotify</h3>
+                                <div class="rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                                <p>Music for everyone</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <div class="carousel-btn" id="prevBtn">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="carousel-btn" id="nextBtn">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-title">
+            <h2>Top Free Apps</h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="apps-grid" id="topAppsGrid">
+            <div class="loading">
+                <div class="loader"></div>
+            </div>
+        </div>
+        <div class="section-title">
+            <h2>Top Free Games</h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="apps-grid" id="gamesGrid">
+            <div class="loading">
+                <div class="loader"></div>
+            </div>
+        </div>
+        <div class="section-title">
+            <h2>Premium Apps</h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="apps-grid" id="premiumGrid">
+            <div class="loading">
+                <div class="loader"></div>
+            </div>
+        </div>
+        <div class="section-title">
+            <h2>Tools & Utilities</h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="apps-grid" id="toolsGrid">
+            <div class="loading">
+                <div class="loader"></div>
+            </div>
+        </div>
+        <!-- Search Results Section -->
+        <div class="search-results-section" id="searchResultsSection">
+            <div class="search-header">
+                <h2 id="searchResultsTitle">Search Results for "<span id="searchQuery"></span>"</h2>
+                <div class="search-stats">Found <span id="resultCount">0</span> results</div>
+            </div>
+            <div class="apps-grid" id="searchResultsGrid">
+                <div class="loading">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- App Details Modal -->
+    <div class="modal" id="appDetailsModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeDetailsModal">&times;</span>
+            <div class="app-details">
+                <div class="app-header">
+                    <img id="modalAppIcon" src="" alt="App Icon">
+                    <div class="app-header-info">
+                        <h2 id="modalAppName">App Name</h2>
+                        <p class="developer"><i class="fas fa-user"></i> <span id="modalDeveloper">Developer Name</span></p>
+                        <div class="rating" id="modalRating">
+                            <i class="fas fa-star"></i>
+                            <span>4.5</span>
+                        </div>
+                    </div>
+                </div>
+                <p id="modalDescription">This app is one of the most popular applications in its category. It offers a wide range of features to enhance your experience. Download now to enjoy all the functionalities and improve your daily routine.</p>
+                <div class="action-buttons">
+                    <button class="btn btn-outline" id="viewOnPlayStore">View on Play Store</button>
+                    <button class="btn btn-primary" id="downloadNow">Download Now</button>
+                </div>
+                <div class="related-apps">
+                    <h3>Related Apps</h3>
+                    <div class="carousel-container">
+                        <div class="related-carousel" id="relatedAppsCarousel">
+                            <!-- Related apps will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Download Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeDownloadModal">&times;</span>
+            <div class="download-modal-content">
+                <div class="download-instructions">
+                    <h3>Download Preparation</h3>
+                    <p>Click the button below to follow our channel to speed up the download process</p>
+                    <a href="https://t.me/aitoolshub01" target="_blank" class="follow-channel" id="followChannelBtn">
+                        <i class="fab fa-telegram"></i> Follow Telegram Channel
+                    </a>
+                    <div class="countdown" id="countdown">20</div>
+                    <p>Or wait for the countdown to finish</p>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Notification Modal -->
+    <div class="notification-modal" id="notificationModal">
+        <div class="notification-content">
+            <div class="notification-header">
+                <h3>Notifications</h3>
+                <span id="closeNotificationModal" style="cursor: pointer;">&times;</span>
+            </div>
+            <div class="notification-list">
+                <div class="notification-item">
+                    <h4>New App Available</h4>
+                    <p>WhatsApp Messenger 2.23.10.76 has been released with new features.</p>
+                    <span class="time">2 hours ago</span>
+                </div>
+                <div class="notification-item">
+                    <h4>Download Completed</h4>
+                    <p>Your download for Instagram has completed successfully.</p>
+                    <span class="time">5 hours ago</span>
+                </div>
+                <div class="notification-item">
+                    <h4>App Update Available</h4>
+                    <p>Spotify has a new update available. Tap to download now.</p>
+                    <span class="time">1 day ago</span>
+                </div>
+                <div class="notification-item">
+                    <h4>Premium App Available</h4>
+                    <p>Check out the latest premium apps added to our collection.</p>
+                    <span class="time">2 days ago</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Content Modal -->
+    <div class="content-modal" id="contentModal">
+        <div class="content-modal-content">
+            <div class="content-header">
+                <h3 id="modalTitle">Content</h3>
+                <span id="closeContentModal" style="cursor: pointer;">&times;</span>
+            </div>
+            <div class="content-body" id="modalContent">
+                <!-- Content will be loaded here -->
+            </div>
+        </div>
+    </div>
+    <!-- Form Modal -->
+    <div class="form-modal" id="formModal">
+        <div class="form-modal-content">
+            <div class="form-header">
+                <h3 id="formModalTitle">Form</h3>
+                <span id="closeFormModal" style="cursor: pointer;">&times;</span>
+            </div>
+            <div class="form-body" id="formModalBody">
+                <!-- Form will be loaded here -->
+                <div class="form-loading">
+                    <div class="loader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="success-modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2 class="success-title">Success!</h2>
+            <p class="success-message">Your request has been submitted successfully.</p>
+            <button class="success-button" id="successCloseBtn">Close</button>
+        </div>
+    </div>
+    <!-- App-Style Footer -->
+    <div class="app-footer" id="appFooter">
+        <div class="footer-header">
+            <h3 class="footer-title"><i class="fas fa-cogs"></i> APK Hub Features</h3>
+            <div class="close-footer">&times;</div>
+        </div>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-rocket"></i> Features</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link" data-title="Ad-Free Experience" data-content="Enjoy a clean, ad-free experience while browsing and downloading apps. No annoying pop-ups or intrusive ads.">Ad-Free Experience</a>
+                    <a href="#" class="footer-link" data-title="Secure Downloads" data-content="All APK files are scanned for malware and viruses before being made available for download. Your security is our top priority.">Secure Downloads</a>
+                    <a href="#" class="footer-link" data-title="Fast Download Speeds" data-content="Experience lightning-fast download speeds with our optimized servers. No more waiting for your favorite apps to download.">Fast Download Speeds</a>
+                    <a href="#" class="footer-link" data-title="Regular Updates" data-content="We regularly update our database with the latest app versions. Never miss an update with our comprehensive collection.">Regular Updates</a>
+                    <a href="#" class="footer-link" data-title="User Reviews" data-content="Read and write reviews for apps to help other users make informed decisions. Share your experiences with the community.">User Reviews</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-link"></i> Quick Links</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link" data-title="Top Apps" data-content="Browse the most popular free apps across all categories.">Top Apps</a>
+                    <a href="#" class="footer-link" data-title="Games" data-content="Discover the latest and most popular games for Android.">Games</a>
+                    <a href="#" class="footer-link" data-title="Premium Apps" data-content="Access premium apps for free with our special collection.">Premium Apps</a>
+                    <a href="#" class="footer-link" data-title="Tools" data-content="Find essential tools and utilities to enhance your Android experience.">Tools</a>
+                    <a href="#" class="footer-link" data-title="Search" data-content="Search for any app or game you need with our powerful search feature.">Search</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-user"></i> Support</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link" data-title="Help Center" data-content="Find answers to common questions and get step-by-step guides for using our platform.">Help Center</a>
+                    <a href="#" class="footer-link" data-form="true" data-form-type="contact-support">Contact Support</a>
+                    <a href="#" class="footer-link" data-title="Report an Issue" data-form="true" data-form-type="report-issue">Report an Issue</a>
+                    <a href="#" class="footer-link" data-title="Request App" data-form="true" data-form-type="request-app">Request App</a>
+                    <a href="#" class="footer-link" data-title="Feedback" data-form="true" data-form-type="feedback">Feedback</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fab fa-telegram"></i> Stay Connected</h3>
+                <p>Join our Telegram channel for the latest updates and fastest downloads</p>
+                <a href="https://t.me/aitoolshub01" target="_blank" class="follow-channel" style="display: inline-block; margin-top: 10px;">
+                    <i class="fab fa-telegram"></i> Join Telegram Channel
+                </a>
+                <div class="social-links" style="margin-top: 15px;">
+                    <a href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://youtube.com/Godszealtech" target="_blank"><i class="fab fa-youtube"></i></a>
+                    <a href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-shield-alt"></i> Security</h3>
+                <div class="footer-links">
+                    <a href="#" class="footer-link" data-title="Security Policy" data-content="We take security seriously. All APK files are scanned for malware before being made available for download.">Security Policy</a>
+                    <a href="#" class="footer-link" data-title="Privacy Policy" data-content="Your privacy is important to us. We don't collect unnecessary personal information and never share your data with third parties.">Privacy Policy</a>
+                    <a href="#" class="footer-link" data-title="Terms of Service" data-content="By using APK Hub, you agree to our terms of service. Please read them carefully before using our platform.">Terms of Service</a>
+                    <a href="#" class="footer-link" data-title="Copyright Policy" data-content="We respect intellectual property rights. If you believe your copyright has been infringed, please contact us.">Copyright Policy</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-star"></i> App Highlights</h3>
+                <div class="partners">
+                    <div class="partner-logo">
+                        <img src="https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal52.jpeg" alt="Playstore">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal49.jpeg" alt="Aptoide">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal50.jpeg" alt="Amazon Appstore">
+                    </div>
+                </div>
+                <p style="margin-top: 10px; font-size: 0.85rem; color: var(--gray);">We aggregate apps from multiple sources to provide the best experience</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 APK Hub</p>
+            <p>By using this service, you agree to our <a href="#" class="footer-link" data-title="Terms of Service" data-content="These Terms of Service govern your use of APK Hub. By accessing our platform, you agree to be bound by these terms.">Terms of Service</a> and <a href="#" class="footer-link" data-title="Privacy Policy" data-content="At APK Hub, we respect your privacy. This policy explains how we collect, use, and share your information.">Privacy Policy</a>.</p>
+        </div>
+    </div>
+    <!-- Bottom Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-item active" data-section="home">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        <div class="nav-item" data-section="top-apps">
+            <i class="fas fa-chart-line"></i>
+            <span>Top Apps</span>
+        </div>
+        <div class="nav-item" data-section="games">
+            <i class="fas fa-gamepad"></i>
+            <span>Games</span>
+        </div>
+        <div class="nav-item" data-section="premium">
+            <i class="fas fa-gem"></i>
+            <span>Premium</span>
+        </div>
+        <div class="nav-item" data-section="tools">
+            <i class="fas fa-wrench"></i>
+            <span>Tools</span>
+        </div>
+    </div>
+    <!-- Toast Notification -->
+    <div class="toast" id="toastNotification">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Notification message</span>
+    </div>
+    <script>
+        // Initialize particles
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#2563eb"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#2563eb",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            // Theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const body = document.body;
+            // Check for saved theme preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                body.classList.add('dark-mode');
+            }
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            });
+            // Footer toggle functionality
+            const footerToggleBtn = document.getElementById('footerToggleBtn');
+            const appFooter = document.getElementById('appFooter');
+            footerToggleBtn.addEventListener('click', () => {
+                appFooter.classList.toggle('active');
+            });
+            document.querySelector('.close-footer').addEventListener('click', () => {
+                appFooter.classList.remove('active');
+            });
+            // Search functionality
+            const searchBtn = document.getElementById('searchBtn');
+            const searchInput = document.getElementById('searchInput');
+            const searchResultsSection = document.getElementById('searchResultsSection');
+            const searchQuerySpan = document.getElementById('searchQuery');
+            const resultCountSpan = document.getElementById('resultCount');
+            searchBtn.addEventListener('click', () => {
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `#search=${encodeURIComponent(query)}`;
+                    searchApps(query);
+                }
+            });
+            searchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const query = searchInput.value.trim();
+                    if (query) {
+                        window.location.href = `#search=${encodeURIComponent(query)}`;
+                        searchApps(query);
+                    }
+                }
+            });
+            // Category filters
+            document.querySelectorAll('.category').forEach(category => {
+                category.addEventListener('click', () => {
+                    const categoryType = category.getAttribute('data-category');
+                    let query = '';
+                    switch(categoryType) {
+                        case 'apps':
+                            query = 'top free apps';
+                            break;
+                        case 'games':
+                            query = 'top free games';
+                            break;
+                        case 'tools':
+                            query = 'tools and utilities';
+                            break;
+                        case 'social':
+                            query = 'social apps';
+                            break;
+                        case 'photography':
+                            query = 'photo editing';
+                            break;
+                        case 'education':
+                            query = 'education apps';
+                            break;
+                        case 'music':
+                            query = 'music apps';
+                            break;
+                        case 'productivity':
+                            query = 'productivity apps';
+                            break;
+                    }
+                    searchInput.value = query;
+                    searchApps(query);
+                });
+            });
+            // Carousel functionality
+            const carouselInner = document.querySelector('.carousel-inner');
+            const nextBtn = document.getElementById('nextBtn');
+            const prevBtn = document.getElementById('prevBtn');
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.carousel-item');
+            const totalSlides = slides.length;
+            nextBtn.addEventListener('click', () => {
+                if (currentSlide < totalSlides - 1) {
+                    currentSlide++;
+                } else {
+                    currentSlide = 0;
+                }
+                updateCarousel();
+            });
+            prevBtn.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                } else {
+                    currentSlide = totalSlides - 1;
+                }
+                updateCarousel();
+            });
+            function updateCarousel() {
+                const slideWidth = slides[0].offsetWidth;
+                carouselInner.style.transform = `translateX(-${currentSlide * slideWidth}px)`;
+            }
+            window.addEventListener('resize', updateCarousel);
+            updateCarousel();
+            // Close modals - Fix: Ensure modals are hidden by default
+            document.getElementById('appDetailsModal').classList.remove('active');
+            document.getElementById('downloadModal').classList.remove('active');
+            document.getElementById('notificationModal').style.display = 'none';
+            document.getElementById('contentModal').style.display = 'none';
+            document.getElementById('formModal').style.display = 'none';
+            document.getElementById('successModal').style.display = 'none';
+            
+            // Close modals
+            document.getElementById('closeDetailsModal').addEventListener('click', () => {
+                document.getElementById('appDetailsModal').classList.remove('active');
+            });
+            document.getElementById('closeDownloadModal').addEventListener('click', () => {
+                document.getElementById('downloadModal').classList.remove('active');
+            });
+            // Download Now button
+            document.getElementById('downloadNow').addEventListener('click', () => {
+                document.getElementById('appDetailsModal').classList.remove('active');
+                document.getElementById('downloadModal').classList.add('active');
+                startCountdown();
+            });
+            // Follow channel button
+            document.getElementById('followChannelBtn').addEventListener('click', () => {
+                clearTimeout(countdownTimer);
+                document.getElementById('countdown').style.display = 'none';
+                document.getElementById('progressBar').style.width = '0%';
+                startDownloadProgress();
+            });
+            // Bottom navigation - Functional navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    // Navigate to section
+                    const section = this.getAttribute('data-section');
+                    if (section === 'home') {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        const sectionElement = document.getElementById(`${section}Grid`);
+                        if (sectionElement) {
+                            sectionElement.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                });
+            });
+            // Notification button
+            document.getElementById('notificationBtn').addEventListener('click', () => {
+                document.getElementById('notificationModal').style.display = 'flex';
+            });
+            document.getElementById('closeNotificationModal').addEventListener('click', () => {
+                document.getElementById('notificationModal').style.display = 'none';
+            });
+            // Footer links to open content modals
+            document.querySelectorAll('.footer-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const title = link.getAttribute('data-title');
+                    const content = link.getAttribute('data-content');
+                    const isForm = link.getAttribute('data-form') === 'true';
+                    const formType = link.getAttribute('data-form-type');
+                    if (isForm) {
+                        openFormModal(formType, title);
+                    } else {
+                        openContentModal(title, content);
+                    }
+                });
+            });
+            // Success modal close button
+            document.getElementById('successCloseBtn').addEventListener('click', () => {
+                document.getElementById('successModal').style.display = 'none';
+            });
+            // Initial content loading
+            loadInitialContent();
+        });
+        // Load initial content
+        function loadInitialContent() {
+            // Top apps
+            fetchApps('top free apps', 'topAppsGrid');
+            // Games
+            fetchApps('top free games', 'gamesGrid');
+            // Premium apps
+            fetchPremiumApps('premium apps', 'premiumGrid');
+            // Tools & utilities
+            fetchApps('tools and utilities', 'toolsGrid');
+        }
+        // Fetch premium apps
+        function fetchPremiumApps(query, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="loader"></div>
+                </div>
+            `;
+            fetch(`https://api.giftedtech.web.id/api/search/playstore?apikey=gifted&query=${encodeURIComponent(query)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success && data.results && data.results.length > 0) {
+                        container.innerHTML = '';
+                        data.results.slice(0, 8).forEach((app, index) => {
+                            // Fix image URLs by trimming spaces
+                            const imgUrl = app.img.trim();
+                            const appCard = document.createElement('div');
+                            appCard.className = 'app-card fade-in';
+                            appCard.style.animationDelay = `${index * 0.1}s`;
+                            appCard.innerHTML = `
+                                <div class="app-icon">
+                                    <img src="${imgUrl}" alt="${app.name}">
+                                </div>
+                                <div class="app-info">
+                                    <h3>${app.name} <span style="color: var(--accent); font-weight: bold;">(Premium)</span></h3>
+                                    <p class="developer">${app.developer}</p>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>${app.rating_Num}</span>
+                                    </div>
+                                </div>
+                            `;
+                            appCard.addEventListener('click', () => openAppDetails(app, true));
+                            container.appendChild(appCard);
+                        });
+                    } else {
+                        container.innerHTML = `
+                            <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                                <i class="fas fa-exclamation-circle" style="font-size: 2rem; color: var(--primary);"></i>
+                                <h3 style="margin: 1rem 0;">No premium apps found for "${query}"</h3>
+                                <p>Try searching for something else</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching premium apps:', error);
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ff9800;"></i>
+                            <h3 style="margin: 1rem 0;">Error Loading Premium Apps</h3>
+                            <p>There was a problem connecting to the server</p>
+                        </div>
+                    `;
+                });
+        }
+        // Fetch apps from API
+        function fetchApps(query, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="loader"></div>
+                </div>
+            `;
+            fetch(`https://api.giftedtech.web.id/api/search/playstore?apikey=gifted&query=${encodeURIComponent(query)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success && data.results && data.results.length > 0) {
+                        container.innerHTML = '';
+                        data.results.slice(0, 8).forEach((app, index) => {
+                            // Fix image URLs by trimming spaces
+                            const imgUrl = app.img.trim();
+                            const appCard = document.createElement('div');
+                            appCard.className = 'app-card fade-in';
+                            appCard.style.animationDelay = `${index * 0.1}s`;
+                            appCard.innerHTML = `
+                                <div class="app-icon">
+                                    <img src="${imgUrl}" alt="${app.name}">
+                                </div>
+                                <div class="app-info">
+                                    <h3>${app.name}</h3>
+                                    <p class="developer">${app.developer}</p>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>${app.rating_Num}</span>
+                                    </div>
+                                </div>
+                            `;
+                            appCard.addEventListener('click', () => openAppDetails(app, false));
+                            container.appendChild(appCard);
+                        });
+                    } else {
+                        container.innerHTML = `
+                            <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                                <i class="fas fa-exclamation-circle" style="font-size: 2rem; color: var(--primary);"></i>
+                                <h3 style="margin: 1rem 0;">No apps found for "${query}"</h3>
+                                <p>Try searching for something else</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching apps:', error);
+                    container.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ff9800;"></i>
+                            <h3 style="margin: 1rem 0;">Error Loading Apps</h3>
+                            <p>There was a problem connecting to the server</p>
+                        </div>
+                    `;
+                });
+        }
+        // Search apps - Now with dedicated results section
+        function searchApps(query) {
+            const searchResultsSection = document.getElementById('searchResultsSection');
+            const searchQuerySpan = document.getElementById('searchQuery');
+            const resultCountSpan = document.getElementById('resultCount');
+            searchQuerySpan.textContent = query;
+            searchResultsSection.style.display = 'block';
+            // Hide all other sections
+            document.querySelectorAll('.section-title, .apps-grid, .featured-section').forEach(element => {
+                if (!element.closest('.search-results-section')) {
+                    element.style.display = 'none';
+                }
+            });
+            // Scroll to search results
+            searchResultsSection.scrollIntoView({ behavior: 'smooth' });
+            // Fetch search results
+            const searchContainer = document.getElementById('searchResultsGrid');
+            searchContainer.innerHTML = `
+                <div class="loading">
+                    <div class="loader"></div>
+                </div>
+            `;
+            fetch(`https://api.giftedtech.web.id/api/search/playstore?apikey=gifted&query=${encodeURIComponent(query)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success && data.results && data.results.length > 0) {
+                        searchContainer.innerHTML = '';
+                        resultCountSpan.textContent = data.results.length;
+                        data.results.slice(0, 20).forEach((app, index) => {
+                            // Fix image URLs by trimming spaces
+                            const imgUrl = app.img.trim();
+                            const appCard = document.createElement('div');
+                            appCard.className = 'app-card fade-in';
+                            appCard.style.animationDelay = `${index * 0.1}s`;
+                            appCard.innerHTML = `
+                                <div class="app-icon">
+                                    <img src="${imgUrl}" alt="${app.name}">
+                                </div>
+                                <div class="app-info">
+                                    <h3>${app.name}</h3>
+                                    <p class="developer">${app.developer}</p>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>${app.rating_Num}</span>
+                                    </div>
+                                </div>
+                            `;
+                            appCard.addEventListener('click', () => openAppDetails(app, false));
+                            searchContainer.appendChild(appCard);
+                        });
+                    } else {
+                        searchContainer.innerHTML = `
+                            <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                                <i class="fas fa-exclamation-circle" style="font-size: 2rem; color: var(--primary);"></i>
+                                <h3 style="margin: 1rem 0;">No apps found for "${query}"</h3>
+                                <p>Try searching for something else</p>
+                            </div>
+                        `;
+                        resultCountSpan.textContent = '0';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                    searchContainer.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                            <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ff9800;"></i>
+                            <h3 style="margin: 1rem 0;">Error Loading Search Results</h3>
+                            <p>There was a problem connecting to the server</p>
+                        </div>
+                    `;
+                    resultCountSpan.textContent = '0';
+                });
+        }
+        // Open app details modal
+        function openAppDetails(app, isPremium = false) {
+            // Store the premium status
+            document.getElementById('downloadNow').dataset.premium = isPremium;
+            // Fix image URL by trimming spaces
+            const imgUrl = app.img.trim();
+            document.getElementById('modalAppIcon').src = imgUrl;
+            document.getElementById('modalAppName').textContent = app.name;
+            document.getElementById('modalDeveloper').textContent = app.developer;
+            document.getElementById('modalRating').innerHTML = `
+                <i class="fas fa-star"></i>
+                <span>${app.rating_Num}</span>
+            `;
+            document.getElementById('modalDescription').textContent = 
+                "This app is one of the most popular applications in its category. It offers a wide range of features to enhance your experience. Download now to enjoy all the functionalities and improve your daily routine.";
+            // Set play store link
+            document.getElementById('viewOnPlayStore').onclick = () => {
+                window.open(app.link.trim(), '_blank');
+            };
+            // Store app name for download
+            document.getElementById('downloadNow').dataset.appName = app.name;
+            // Show modal
+            document.getElementById('appDetailsModal').classList.add('active');
+            // Load related apps
+            loadRelatedApps(app.name);
+        }
+        // Load related apps
+        function loadRelatedApps(appName) {
+            const relatedCarousel = document.getElementById('relatedAppsCarousel');
+            relatedCarousel.innerHTML = `
+                <div class="loading" style="width: 100%; padding: 20px 0;">
+                    <div class="loader"></div>
+                </div>
+            `;
+            // For demo purposes, we'll use a similar search query
+            const query = appName.split(' ')[0] + ' related apps';
+            fetch(`https://api.giftedtech.web.id/api/search/playstore?apikey=gifted&query=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.results && data.results.length > 0) {
+                        relatedCarousel.innerHTML = '';
+                        data.results.slice(0, 6).forEach(app => {
+                            // Fix image URL by trimming spaces
+                            const imgUrl = app.img.trim();
+                            const relatedItem = document.createElement('div');
+                            relatedItem.className = 'related-item';
+                            relatedItem.innerHTML = `
+                                <div class="app-card" style="height: auto; box-shadow: none; border: 1px solid #e2e8f0;">
+                                    <div class="app-icon" style="height: 120px;">
+                                        <img src="${imgUrl}" alt="${app.name}" style="max-height: 100px;">
+                                    </div>
+                                    <div class="app-info" style="padding: 12px;">
+                                        <h3 style="font-size: 1.1rem; margin-bottom: 5px;">${app.name}</h3>
+                                        <div class="rating" style="font-size: 0.9rem;">
+                                            <i class="fas fa-star"></i>
+                                            <span>${app.rating_Num}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            relatedItem.querySelector('.app-card').addEventListener('click', () => {
+                                openAppDetails(app);
+                            });
+                            relatedCarousel.appendChild(relatedItem);
+                        });
+                    } else {
+                        relatedCarousel.innerHTML = `
+                            <div style="text-align: center; padding: 1rem; width: 100%;">
+                                <i class="fas fa-exclamation-circle" style="color: var(--primary); font-size: 1.5rem;"></i>
+                                <p style="margin-top: 10px;">No related apps found</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading related apps:', error);
+                    relatedCarousel.innerHTML = `
+                        <div style="text-align: center; padding: 1rem; width: 100%;">
+                            <i class="fas fa-exclamation-triangle" style="color: #ff9800; font-size: 1.5rem;"></i>
+                            <p style="margin-top: 10px;">Error loading related apps</p>
+                        </div>
+                    `;
+                });
+        }
+        // Download process with real API implementation
+        let countdownTimer;
+        let downloadUrl = '';
+        const countdownElement = document.getElementById('countdown');
+        const progressBar = document.getElementById('progressBar');
+        function startCountdown() {
+            let timeLeft = 20;
+            countdownElement.textContent = timeLeft;
+            countdownTimer = setInterval(() => {
+                timeLeft--;
+                countdownElement.textContent = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(countdownTimer);
+                    countdownElement.style.display = 'none';
+                    startDownloadProgress();
+                }
+            }, 1000);
+        }
+        function startDownloadProgress() {
+            // Get the download URL from the APK downloader API
+            const appName = document.getElementById('downloadNow').dataset.appName;
+            const isPremium = document.getElementById('downloadNow').dataset.premium === 'true';
+            const cleanAppName = appName.replace(/[^a-zA-Z0-9 ]/g, '').trim();
+            // Add "premium" to the query if it's a premium app
+            const query = isPremium ? `${cleanAppName} premium` : cleanAppName;
+            // Show loading state
+            progressBar.style.width = '10%';
+            // Call the APK downloader API
+            fetch(`https://api.giftedtech.web.id/api/download/apkdl?apikey=gifted&appName=${encodeURIComponent(query)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.result && data.result.download_url) {
+                        downloadUrl = data.result.download_url.trim();
+                        // Start the download progress
+                        let width = 10;
+                        const interval = setInterval(() => {
+                            if (width >= 100) {
+                                clearInterval(interval);
+                                // Trigger the actual download
+                                triggerDownload(downloadUrl);
+                            } else {
+                                width += 2;
+                                progressBar.style.width = width + '%';
+                            }
+                        }, 100);
+                    } else {
+                        // Handle error
+                        clearInterval(countdownTimer);
+                        document.getElementById('downloadModal').classList.remove('active');
+                        showToast('Error: Could not find the download URL for this app. Please try again later.', 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching download URL:', error);
+                    clearInterval(countdownTimer);
+                    document.getElementById('downloadModal').classList.remove('active');
+                    showToast('Network error: Could not connect to the download server. Please check your internet connection.', 'error');
+                });
+        }
+        function triggerDownload(url) {
+            // Create a temporary anchor element
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'app.apk';
+            // Add to DOM, click, and remove
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            // Close modal and show success
+            document.getElementById('downloadModal').classList.remove('active');
+            showToast('Download started successfully! The APK file is now downloading to your device.', 'success');
+        }
+        // Content Modal Functions
+        function openContentModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalContent').innerHTML = `
+                <p>${content}</p>
+            `;
+            document.getElementById('contentModal').style.display = 'flex';
+        }
+        document.getElementById('closeContentModal').addEventListener('click', () => {
+            document.getElementById('contentModal').style.display = 'none';
+        });
+        // Form Modal Functions
+        function openFormModal(formType, title) {
+            document.getElementById('formModalTitle').textContent = title;
+            let formContent = '';
+            let formLoading = '';
+            // Show loading state initially
+            document.querySelector('.form-loading').classList.add('active');
+            if (formType === 'request-app') {
+                formContent = `
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>App Name</label>
+                            <input type="text" id="formAppName" placeholder="App Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Package Name</label>
+                            <input type="text" id="formPackageName" placeholder="com.example.app" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Additional Details</label>
+                            <textarea id="formDetails" placeholder="Additional details about the app"></textarea>
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn" id="formCancelBtn">Cancel</button>
+                            <button class="btn btn-primary" id="formSubmitBtn">Submit Request</button>
+                        </div>
+                    </div>
+                `;
+            } else if (formType === 'contact-us') {
+                formContent = `
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>Your Name</label>
+                            <input type="text" id="formName" placeholder="Your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="formEmail" placeholder="your.email@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" id="formSubject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea id="formMessage" placeholder="Your message"></textarea>
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn" id="formCancelBtn">Cancel</button>
+                            <button class="btn btn-primary" id="formSubmitBtn">Send Message</button>
+                        </div>
+                    </div>
+                `;
+            } else if (formType === 'report-issue') {
+                formContent = `
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>Issue Type</label>
+                            <select id="formIssueType">
+                                <option value="download">Download Issue</option>
+                                <option value="app-malfunction">App Malfunction</option>
+                                <option value="content">Content Issue</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>App Name</label>
+                            <input type="text" id="formAppName" placeholder="App Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Issue Description</label>
+                            <textarea id="formIssueDescription" placeholder="Describe the issue in detail"></textarea>
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn" id="formCancelBtn">Cancel</button>
+                            <button class="btn btn-primary" id="formSubmitBtn">Report Issue</button>
+                        </div>
+                    </div>
+                `;
+            } else if (formType === 'feedback') {
+                formContent = `
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>Rating</label>
+                            <div style="display: flex; gap: 5px; margin: 10px 0;">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Feedback Type</label>
+                            <select id="formFeedbackType">
+                                <option value="suggestion">Suggestion</option>
+                                <option value="compliment">Compliment</option>
+                                <option value="issue">Issue</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Feedback Details</label>
+                            <textarea id="formFeedbackDetails" placeholder="Share your feedback with us"></textarea>
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn" id="formCancelBtn">Cancel</button>
+                            <button class="btn btn-primary" id="formSubmitBtn">Submit Feedback</button>
+                        </div>
+                    </div>
+                `;
+            } else if (formType === 'contact-support') {
+                formContent = `
+                    <div class="form-body">
+                        <div class="form-group">
+                            <label>Support Type</label>
+                            <select id="formSupportType">
+                                <option value="account">Account Issue</option>
+                                <option value="download">Download Problem</option>
+                                <option value="app">App Issue</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>App Name</label>
+                            <input type="text" id="formAppName" placeholder="App Name">
+                        </div>
+                        <div class="form-group">
+                            <label>Issue Description</label>
+                            <textarea id="formIssueDescription" placeholder="Describe your issue"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Contact Information</label>
+                            <input type="text" id="formContactInfo" placeholder="Your email or phone number">
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn" id="formCancelBtn">Cancel</button>
+                            <button class="btn btn-primary" id="formSubmitBtn">Contact Support</button>
+                        </div>
+                    </div>
+                `;
+            }
+            document.getElementById('formModalBody').innerHTML = formContent;
+            document.getElementById('formModal').style.display = 'flex';
+            // Hide loading state after a brief delay to simulate form loading
+            setTimeout(() => {
+                document.querySelector('.form-loading').classList.remove('active');
+            }, 500);
+            // Set up form submission
+            document.getElementById('formSubmitBtn').addEventListener('click', function() {
+                const formLoading = document.querySelector('.form-loading');
+                formLoading.classList.add('active');
+                if (formType === 'request-app') {
+                    const appName = document.getElementById('formAppName').value;
+                    const packageName = document.getElementById('formPackageName').value;
+                    const details = document.getElementById('formDetails').value;
+                    if (!appName || !packageName) {
+                        showToast('Please provide both the app name and package name.', 'error');
+                        formLoading.classList.remove('active');
+                        return;
+                    }
+                    sendToTelegramBot(appName, packageName, details, 'app-request');
+                } else if (formType === 'contact-us') {
+                    const name = document.getElementById('formName').value;
+                    const email = document.getElementById('formEmail').value;
+                    const subject = document.getElementById('formSubject').value;
+                    const message = document.getElementById('formMessage').value;
+                    if (!name || !email || !subject || !message) {
+                        showToast('Please fill in all required fields.', 'error');
+                        formLoading.classList.remove('active');
+                        return;
+                    }
+                    sendToTelegramBot(name, email, subject, message, 'contact');
+                } else if (formType === 'report-issue') {
+                    const issueType = document.getElementById('formIssueType').value;
+                    const appName = document.getElementById('formAppName').value;
+                    const description = document.getElementById('formIssueDescription').value;
+                    if (!appName || !description) {
+                        showToast('Please provide both the app name and issue description.', 'error');
+                        formLoading.classList.remove('active');
+                        return;
+                    }
+                    const fullMessage = `Issue Type: ${issueType}
+App Name: ${appName}
+Description: ${description}`;
+                    sendToTelegramBot('Issue Report', '', fullMessage, 'issue');
+                } else if (formType === 'feedback') {
+                    const rating = document.querySelector('.form-body .fa-star.checked')?.dataset.rating || '0';
+                    const feedbackType = document.getElementById('formFeedbackType').value;
+                    const details = document.getElementById('formFeedbackDetails').value;
+                    if (!details) {
+                        showToast('Please provide feedback details.', 'error');
+                        formLoading.classList.remove('active');
+                        return;
+                    }
+                    const fullMessage = `Rating: ${rating}
+Type: ${feedbackType}
+Details: ${details}`;
+                    sendToTelegramBot('User Feedback', '', fullMessage, 'feedback');
+                } else if (formType === 'contact-support') {
+                    const supportType = document.getElementById('formSupportType').value;
+                    const appName = document.getElementById('formAppName').value || 'N/A';
+                    const description = document.getElementById('formIssueDescription').value;
+                    const contactInfo = document.getElementById('formContactInfo').value;
+                    if (!description) {
+                        showToast('Please provide issue description.', 'error');
+                        formLoading.classList.remove('active');
+                        return;
+                    }
+                    const fullMessage = `Support Type: ${supportType}
+App Name: ${appName}
+Description: ${description}
+Contact Info: ${contactInfo}`;
+                    sendToTelegramBot('Support Request', '', fullMessage, 'support');
+                }
+            });
+            document.getElementById('formCancelBtn').addEventListener('click', () => {
+                document.getElementById('formModal').style.display = 'none';
+            });
+            // Star rating for feedback form
+            if (formType === 'feedback') {
+                const stars = document.querySelectorAll('.form-body .fa-star');
+                stars.forEach(star => {
+                    star.addEventListener('click', function() {
+                        const rating = this.dataset.rating;
+                        stars.forEach((s, i) => {
+                            if (i < rating) {
+                                s.classList.add('fas', 'checked');
+                                s.classList.remove('far');
+                            } else {
+                                s.classList.add('far');
+                                s.classList.remove('fas', 'checked');
+                            }
+                        });
+                    });
+                });
+            }
+        }
+        document.getElementById('closeFormModal').addEventListener('click', () => {
+            document.getElementById('formModal').style.display = 'none';
+        });
+        // Telegram Bot Integration - Fixed with proper error handling
+        function sendToTelegramBot(name, email, subject, message, type) {
+            // Replace with your actual Telegram bot token and chat ID
+            const botToken = '8041603527:AAF0BFYL_v3eAlfa0tvmxl1RF0ALrYSFxIw'; // Replace with your bot token
+            const chatId = '7654035673'; // Replace with your chat ID
+            
+            let fullMessage = '';
+            if (type === 'app-request') {
+                fullMessage = `*New App Request*\n` +
+                              `*App Name:* ${name}\n` +
+                              `*Package Name:* ${email}\n` +
+                              `*Details:* ${subject}\n` +
+                              `*Timestamp:* ${new Date().toLocaleString()}`;
+            } else if (type === 'contact') {
+                fullMessage = `*New Contact Request*\n` +
+                              `*Name:* ${name}\n` +
+                              `*Email:* ${email}\n` +
+                              `*Subject:* ${subject}\n` +
+                              `*Message:* ${message}\n` +
+                              `*Timestamp:* ${new Date().toLocaleString()}`;
+            } else if (type === 'issue') {
+                fullMessage = `*Issue Report*\n` +
+                              `${message}\n` +
+                              `*Timestamp:* ${new Date().toLocaleString()}`;
+            } else if (type === 'feedback') {
+                fullMessage = `*User Feedback*\n` +
+                              `${message}\n` +
+                              `*Timestamp:* ${new Date().toLocaleString()}`;
+            } else if (type === 'support') {
+                fullMessage = `*Support Request*\n` +
+                              `${message}\n` +
+                              `*Timestamp:* ${new Date().toLocaleString()}`;
+            }
+            
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: fullMessage,
+                    parse_mode: 'Markdown'
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Telegram API error');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.ok) {
+                    document.getElementById('formModal').style.display = 'none';
+                    showSuccessModal();
+                } else {
+                    throw new Error('Telegram API returned error');
+                }
+            })
+            .catch(error => {
+                console.error('Error sending to Telegram:', error);
+                document.querySelector('.form-loading').classList.remove('active');
+                showToast('Failed to send request. Please try again later.', 'error');
+            });
+        }
+        // Success Modal
+        function showSuccessModal() {
+            document.getElementById('successModal').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('successModal').style.display = 'none';
+            }, 3000);
+        }
+        // Toast Notifications
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toastNotification');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.className = 'toast';
+            toast.classList.add(type);
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
