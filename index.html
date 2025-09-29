@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>APK Hub - Download Apps & Games</title>
+    <link rel="icon" type="image/x-icon" href="https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal22.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <style>
@@ -1244,6 +1245,106 @@
             .featured-card h3 {
                 font-size: 1.5rem;
             }
+            /* Install App Banner */
+.install-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--card-bg);
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 15px 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    display: none;
+    border-top: 1px solid var(--gray);
+}
+
+.install-banner.show {
+    display: flex;
+    transform: translateY(0);
+}
+
+.install-banner-content {
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.install-banner-icon {
+    margin-right: 15px;
+}
+
+.install-banner-icon .logo-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--primary);
+    color: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.install-banner-text {
+    margin-right: 20px;
+    flex: 1;
+}
+
+.install-banner-text h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: var(--primary);
+}
+
+.install-banner-text p {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin: 0;
+}
+
+.install-btn {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.close-install {
+    background: transparent;
+    border: none;
+    color: var(--gray);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 15px;
+    transition: var(--transition);
+}
+
+.close-install:hover {
+    color: var(--primary);
+    transform: rotate(90deg);
+}
+
+/* Hide on desktop, show on mobile */
+@media (max-width: 768px) {
+    .install-banner {
+        display: flex;
+    }
+}
+
+/* Adjust for larger mobile screens */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .install-banner {
+        display: flex;
+    }
+}
             .apps-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
@@ -1374,6 +1475,24 @@
     </style>
 </head>
 <body>
+<!-- Install App Banner -->
+<div class="install-banner" id="installBanner">
+    <div class="install-banner-content">
+        <div class="install-banner-icon">
+            <div class="logo-icon">
+                <i class="fas fa-download"></i>
+            </div>
+        </div>
+        <div class="install-banner-text">
+            <h3>Get the Best Experience</h3>
+            <p>Download our mobile app for faster downloads and exclusive features</p>
+        </div>
+        <a href="https://jkgzqdubijffqnwcdqvp.supabase.co/storage/v1/object/public/uploads/Godszeal21.apk" target="_blank" class="btn btn-primary install-btn">Install Now</a>
+        <button class="close-install" id="closeInstallBanner">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+</div>
     <div id="particles-js"></div>
     <header>
         <div class="container header-container">
@@ -2694,6 +2813,55 @@ Contact Info: ${contactInfo}`;
                 toast.classList.remove('show');
             }, 5000);
         }
+        // Install App Banner
+document.addEventListener('DOMContentLoaded', function() {
+    // Show the install banner after 5 seconds
+    setTimeout(() => {
+        const installBanner = document.getElementById('installBanner');
+        if (installBanner) {
+            installBanner.classList.add('show');
+        }
+    }, 5000);
+    
+    // Close button functionality
+    const closeInstallBtn = document.getElementById('closeInstallBanner');
+    if (closeInstallBtn) {
+        closeInstallBtn.addEventListener('click', () => {
+            const installBanner = document.getElementById('installBanner');
+            if (installBanner) {
+                installBanner.classList.remove('show');
+                
+                // Store in localStorage so it doesn't show again for 24 hours
+                const now = new Date();
+                localStorage.setItem('installBannerClosed', now.getTime());
+            }
+        });
+    }
+    
+    // Check if user has closed the banner recently
+    const closedTime = localStorage.getItem('installBannerClosed');
+    if (closedTime) {
+        const now = new Date();
+        const diff = now.getTime() - parseInt(closedTime);
+        const hours = diff / (1000 * 60 * 60);
+        
+        // If less than 24 hours have passed since closing
+        if (hours < 24) {
+            const installBanner = document.getElementById('installBanner');
+            if (installBanner) {
+                installBanner.style.display = 'none';
+            }
+        }
+    }
+    
+    // Close banner when user scrolls down
+    window.addEventListener('scroll', () => {
+        const installBanner = document.getElementById('installBanner');
+        if (installBanner && window.scrollY > 100) {
+            installBanner.classList.remove('show');
+        }
+    });
+});
     </script>
 </body>
 </html>
